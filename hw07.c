@@ -15,7 +15,7 @@ int getRand() {
 
 int main() {
 
-  int ary[10];
+  int ary[10], testAry[10];
   int count = 0;
 
   printf("Filling and printing array:\n");
@@ -25,6 +25,15 @@ int main() {
     count++;
   }
 
+  printf("\nWriting the numbers to a file\n");
+  int fd = open("numbers", O_WRONLY | O_CREAT);
+  write(fd, ary, 40);
+  close(fd);
+
+  printf("\nReading file and storing values in new array\n");
+
+  printf("\nPrinting new array to verify it worked:\n");
+  
 }
 
 
