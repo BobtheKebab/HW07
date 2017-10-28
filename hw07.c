@@ -15,8 +15,15 @@ int getRand() {
 
 int main() {
 
-  int num = getRand();
-  printf("%d\n", getRand());
+  int ary[10];
+  int count = 0;
+
+  printf("Filling and printing array:\n");
+  while (count < 10) {
+    ary[count] = getRand();
+    printf("%d : %d\n", count, ary[count]);
+    count++;
+  }
 
 }
 
