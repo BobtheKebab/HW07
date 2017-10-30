@@ -5,15 +5,22 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+//function for checking if there was an error
+void check(int fd) {
+  if (fd == -1) {
+    printf("ERRNO: %s\n", strerror(errno));
+  }
+}
+
 // open /dev/random as read only; read 4 byes (int) into int ret. 
 int getRand() {
   int fd = open("/dev/random", O_RDONLY);
   int ret;
+  check(fd);
   read(fd, &ret, 4); 
   close(fd);
   return ret;
 }
-
 
 int main() {
   
@@ -30,13 +37,17 @@ int main() {
   //create file with rwxr--r--; writes from arrR to file 40 bytes (10 ints); 
   printf("\nWriting numbers to a file...\n");
   int fd = open("numbers", O_WRONLY | O_CREAT, 0744);
-  write(fd, arrR, 40);
+  check(fd);
+  int error = write(fd, arrR, 40);
+  check(error);
   close(fd);
 
   //open file created for read only; read from file 40 bytes into arrW
   printf("\nReading numbers from file...\n");
   fd = open("numbers", O_RDONLY);
-  read(fd, arrW, 40);
+  check(fd);
+  error = read(fd, arrW, 40);
+  check(error);
   close(fd);
 
   //for loop to print each value in arrW; should match arrR
